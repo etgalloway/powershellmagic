@@ -8,8 +8,8 @@ import sys
 import tempfile
 
 from IPython.core.magic import (cell_magic, Magics, magics_class)
-from IPython.core.magics.script import script_args
-from IPython.core.magic_arguments import (magic_arguments, parse_argstring)
+from IPython.core.magic_arguments import (
+    argument, magic_arguments, parse_argstring)
 
 
 @magics_class
@@ -30,7 +30,8 @@ class PowerShellMagics(Magics):
         os.remove(self._input_file_name)
 
     @magic_arguments()
-    @script_args
+    @argument('--out', type=str)
+    @argument('--err', type=str)
     @cell_magic
     def powershell(self, line, cell):
         """Execute a cell body using Powershell.
