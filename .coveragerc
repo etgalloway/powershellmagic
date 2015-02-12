@@ -1,7 +1,9 @@
 # .coveragerc to control coverage.py
 [run]
 branch = False
-omit = */IPython/*
+omit =
+    */IPython/*
+    */site-packages/*
 
 [html]
 directory = coverage_html_report
