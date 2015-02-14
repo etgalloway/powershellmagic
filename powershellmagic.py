@@ -22,13 +22,15 @@ class PowerShellMagics(Magics):
 
     def __init__(self, shell=None):
         super(PowerShellMagics, self).__init__(shell=shell)
-        tf = tempfile.NamedTemporaryFile(suffix='.ps1', delete=False)
-        self._input_file_name = tf.name
-        atexit.register(self._delete_powershell_input_file)
+        self._cell_file_name = self._powershell_tempfile()
 
-    def _delete_powershell_input_file(self):
-        """Delete PowerShell input file."""
-        os.remove(self._input_file_name)
+    def _powershell_tempfile(self):
+        tf = tempfile.NamedTemporaryFile(suffix='.ps1', delete=False)
+        atexit.register(self._delete_powershell_tempfile)
+        return tf.name
+
+    def _delete_powershell_tempfile(self):
+        os.remove(self._cell_file_name)
 
     @magic_arguments()
     @argument(
@@ -56,11 +58,11 @@ class PowerShellMagics(Magics):
 
         args = parse_argstring(self.powershell, line)
 
-        with open(self._input_file_name, mode='w') as f:
+        with open(self._cell_file_name, mode='w') as f:
             f.write(cell)
 
         cmd = 'PowerShell -ExecutionPolicy RemoteSigned -File {}\r\n'
-        cmd = cmd.format(self._input_file_name)
+        cmd = cmd.format(self._cell_file_name)
 
         p = Popen(cmd.split(), stdout=PIPE, stderr=PIPE, stdin=PIPE)
         out, err = p.communicate()
