@@ -4,6 +4,3 @@ branch = False
 omit =
     */IPython/*
     */site-packages/*
-
-[html]
-directory = coverage_html_report
