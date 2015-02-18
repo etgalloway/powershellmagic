@@ -36,22 +36,28 @@ class PowerShellMagics(Magics):
     @argument(
         '--out',
         type=str,
-        help="Redirect stdout to a variable."
+        help="Redirect cell stdout to a variable."
         )
     @argument(
         '--err',
         type=str,
-        help="Redirect stderr to a variable."
+        help="Redirect cell stderr to a variable."
         )
     @cell_magic
     def powershell(self, line, cell):
-        """Execute a cell written in PowerShell by spawning a process
-        that invokes the command:
+        """Use Windows PowerShell to execute an IPython cell.
 
-           PowerShell -ExecutionPolicy RemoteSigned -File tempfile.ps1
+        An example:
 
-        where the argument to '-File' is a file that contains the contents
-        of the cell.
+            In [1]: %%powershell
+               ...: foreach ($i in 1..3) {
+               ...:    $i
+               ...: }
+               ...:
+            1
+            2
+            3
+
         """
         # This function is patterned after
         # IPython.core.magics.ScriptMagics.shebang.
