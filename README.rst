@@ -30,10 +30,13 @@ Use
     In [1]: %load_ext powershellmagic
 
     In [2]: %%powershell
-       ...: get-process ipython, python
+       ...: Get-WMiObject -Class Win32_Process |
+       ...:     Where-Object { $_.Name -like "*python.exe" } |
+       ...:     Select-Object ProcessName, ProcessID, ParentProcessId |
+       ...:     Format-Table -AutoSize
        ...:
 
-    Handles  NPM(K)    PM(K)      WS(K) VM(M)   CPU(s)     Id ProcessName
-    -------  ------    -----      ----- -----   ------     -- -----------
-         22       2      808       1816     7     0.00   3604 ipython
-        162      16    25752      30280   109     1.37   5320 python
+    ProcessName ProcessID ParentProcessId
+    ----------- --------- ---------------
+    ipython.exe      5600            5616
+    python.exe       1740            5600
