@@ -18,6 +18,8 @@ _classifiers = [
     'Topic :: System :: Shells',
     ]
 
+keywords = 'IPython PowerShell'
+
 setup(
     name='powershellmagic',
     version=__version__,
@@ -28,6 +30,7 @@ setup(
     long_description=long_description,
     url='https://github.com/etgalloway/powershellmagic',
     classifiers=_classifiers,
+    keywords=keywords,
     zip_safe=False,
     install_requires=['ipython']
     )
