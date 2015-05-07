@@ -1,6 +1,7 @@
 """IPython magics for Windows PowerShell.
 """
-__version__ = '0.1.0'
+
+__version__ = '0.2.0.dev0'
 
 import atexit
 import os
